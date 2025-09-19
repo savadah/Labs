@@ -4,15 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace ConsoleApp2
 {
     internal class Program
     {
-        public class State
+        public abstract class State
         {
             protected string Name;
-            public State(string name) { Name = name; }
-            public void Print() { Console.WriteLine($"Государство: {Name}"); }
+
+            public State(string name)
+            {
+                Name = name;
+            }
+
+            public virtual void Print()
+            {
+                Console.WriteLine(Name);
+            }
         }
 
         public class Monarchy : State
@@ -29,7 +37,7 @@ namespace ConsoleApp1
                 RulerName = rulerName;
             }
 
-            public new void Print()
+            public override void Print()
             {
                 Console.WriteLine($"Монархия {Name}: правит {RulerTitle} {RulerName}, королевств в составе {KingdomsCount}");
             }
@@ -47,7 +55,7 @@ namespace ConsoleApp1
                 Population = population;
             }
 
-            public new void Print()
+            public override void Print()
             {
                 Console.WriteLine($"Королевство {Name}: король {RulerName}, провинций {ProvincesCount}, население {Population}");
             }
@@ -65,7 +73,7 @@ namespace ConsoleApp1
                 ParliamentSeats = parliamentSeats;
             }
 
-            public new void Print()
+            public override void Print()
             {
                 Console.WriteLine($"Республика {Name}: президент {PresidentName}, мест в парламенте {ParliamentSeats}");
             }
@@ -73,17 +81,14 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            var k = new Kingdom(30, 12_000_000, 1, "Артур", "Авалон");
-            k.Print();
+            State s1 = new Kingdom(30, 12_000_000, 1, "Артур", "Авалон");
+            s1.Print();
 
-            var m = new Monarchy(3, "Император", "Юстиниан", "Византия");
-            m.Print();
+            State s2 = new Monarchy(3, "Император", "Юстиниан", "Византия");
+            s2.Print();
 
-            var r = new Republic("Сыров Кирилл", 100, "Новая Республика");
-            r.Print();
-
-            var s = new State("Геар");
-            s.Print();
+            State s3 = new Republic("Сыров Кирилл", 100, "Новая Республика");
+            s3.Print();
         }
     }
 }
