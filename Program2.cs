@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,10 @@ namespace ConsoleApp2
                 Name = name;
             }
 
+            // абстрактный метод
+            public abstract void GetInfo();
+
+            // Виртуальный метод
             public virtual void Print()
             {
                 Console.WriteLine(Name);
@@ -37,6 +41,12 @@ namespace ConsoleApp2
                 RulerName = rulerName;
             }
 
+            // Реализация абстрактного метода
+            public override void GetInfo()
+            {
+                Console.WriteLine($"Монархия: {Name}, Правитель: {RulerTitle} {RulerName}");
+            }
+
             public override void Print()
             {
                 Console.WriteLine($"Монархия {Name}: правит {RulerTitle} {RulerName}, королевств в составе {KingdomsCount}");
@@ -53,6 +63,12 @@ namespace ConsoleApp2
             {
                 ProvincesCount = provincesCount;
                 Population = population;
+            }
+
+            // Реализация абстрактного метода (наследуется от State)
+            public override void GetInfo()
+            {
+                Console.WriteLine($"Королевство: {Name}, Король: {RulerName}, Население: {Population}");
             }
 
             public override void Print()
@@ -73,6 +89,12 @@ namespace ConsoleApp2
                 ParliamentSeats = parliamentSeats;
             }
 
+            // Реализация абстрактного метода
+            public override void GetInfo()
+            {
+                Console.WriteLine($"Республика: {Name}, Президент: {PresidentName}");
+            }
+
             public override void Print()
             {
                 Console.WriteLine($"Республика {Name}: президент {PresidentName}, мест в парламенте {ParliamentSeats}");
@@ -82,13 +104,14 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             State s1 = new Kingdom(30, 12_000_000, 1, "Артур", "Авалон");
-            s1.Print();
-
             State s2 = new Monarchy(3, "Император", "Юстиниан", "Византия");
-            s2.Print();
-
             State s3 = new Republic("Сыров Кирилл", 100, "Новая Республика");
-            s3.Print();
+
+            // Демонстрация полиморфизма через абстрактный метод GetInfo()
+            Console.WriteLine("\n=== Абстрактный метод GetInfo() ===");
+            s1.GetInfo();
+            s2.GetInfo();
+            s3.GetInfo();
         }
     }
 }
